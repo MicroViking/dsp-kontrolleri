@@ -29,15 +29,46 @@ void piirraMute() {
    else fillRect(1,  61, 58, 58, RED);
    //Piirretään kajarikuvake ja otetaan huomioon kanavakohtainen asetus
    if (channel[currentChannel].getMute == false) {
-     void drawLine(5, 80, 2, 20, WHITE);
+    //levensin viivoja ettei tarvi vedellä viivoi kauheest
+     void drawLine(5, 80, 3, 20, WHITE);
+     void drawLine(8, 80, 3, 20, WHITE);
+     //väli
+     void drawLine(9, 80, 3, 20, WHITE);
+     void drawLine(12, 78, 3, 24, WHITE);
+     void drawLine(15, 76, 3, 28, WHITE);
+     void drawLine(18, 74, 3, 32, WHITE);
+     void drawLine(21, 72, 3, 34, WHITE);
+     void drawLine(24, 70, 3, 36, WHITE);
+     void drawLine(27, 68, 3, 38, WHITE);
+     void drawLine(30, 66, 3, 40, WHITE);
+     //kajari viivat
+     void drawLine(34, 90, 1, 1, WHITE);
+     void drawLine(37, 80, 2, 20, WHITE;
+     void drawLine(43, 70, 2, 40, WHITE;
+     void drawLine(39, 60, 2, 60, WHITE;
      
      
    }
    else {
      //Piirretään kajari valkosella
-     void drawLine(5, 80, 2, 20, WHITE);
+     void drawLine(5, 80, 3, 20, WHITE);
+     void drawLine(8, 80, 3, 20, WHITE);
+     //väli
+     void drawLine(9, 80, 3, 20, WHITE);
+     void drawLine(12, 78, 3, 24, WHITE);
+     void drawLine(15, 76, 3, 28, WHITE);
+     void drawLine(18, 74, 3, 32, WHITE);
+     void drawLine(21, 72, 3, 34, WHITE);
+     void drawLine(24, 70, 3, 36, WHITE);
+     void drawLine(27, 68, 3, 38, WHITE);
+     void drawLine(30, 66, 3, 40, WHITE);
+     
      //Häivytetään kajarun kaikuviivat taustaan
-     void drawLine(5, 80, 2, 20, RED);
+     void drawLine(34, 90, 1, 1, RED);
+     void drawLine(37, 80, 2, 20, RED;
+     void drawLine(43, 70, 2, 40, RED;
+     void drawLine(39, 60, 2, 60, RED;
+     
      
      
    }
