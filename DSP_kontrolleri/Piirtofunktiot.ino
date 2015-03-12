@@ -63,7 +63,7 @@ void piirraMute() {
      void drawLine(27, 68, 3, 38, WHITE);
      void drawLine(30, 66, 3, 40, WHITE);
      
-     //Häivytetään kajarun kaikuviivat taustaan
+     //Häivytetään kajarin kaikuviivat taustaan
      void drawLine(34, 90, 1, 1, RED);
      void drawLine(37, 80, 2, 20, RED;
      void drawLine(43, 70, 2, 40, RED;
