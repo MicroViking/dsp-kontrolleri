@@ -28,8 +28,6 @@ void piirraMute() {
    if (channel[currentChannel].getMute == false) fillRect(1,  61, 58, 58, GREEN);
    else fillRect(1,  61, 58, 58, RED);
    //Piirretään kajarikuvake ja otetaan huomioon kanavakohtainen asetus
-   if (channel[currentChannel].getMute == false) {
-    //levensin viivoja ettei tarvi vedellä viivoi kauheest
      void drawLine(5, 80, 3, 20, WHITE);
      void drawLine(8, 80, 3, 20, WHITE);
      //väli
@@ -41,6 +39,9 @@ void piirraMute() {
      void drawLine(24, 70, 3, 36, WHITE);
      void drawLine(27, 68, 3, 38, WHITE);
      void drawLine(30, 66, 3, 40, WHITE);
+   if (channel[currentChannel].getMute == false) {
+   
+     
      //kajari viivat
      void drawLine(34, 90, 1, 1, WHITE);
      void drawLine(37, 80, 2, 20, WHITE;
@@ -50,20 +51,7 @@ void piirraMute() {
      
    }
    else {
-     //Piirretään kajari valkosella
-     void drawLine(5, 80, 3, 20, WHITE);
-     void drawLine(8, 80, 3, 20, WHITE);
-     //väli
-     void drawLine(9, 80, 3, 20, WHITE);
-     void drawLine(12, 78, 3, 24, WHITE);
-     void drawLine(15, 76, 3, 28, WHITE);
-     void drawLine(18, 74, 3, 32, WHITE);
-     void drawLine(21, 72, 3, 34, WHITE);
-     void drawLine(24, 70, 3, 36, WHITE);
-     void drawLine(27, 68, 3, 38, WHITE);
-     void drawLine(30, 66, 3, 40, WHITE);
-     
-     //Häivytetään kajarin kaikuviivat taustaan
+    //Häivytetään kajarin kaikuviivat taustaan
      void drawLine(34, 90, 1, 1, RED);
      void drawLine(37, 80, 2, 20, RED;
      void drawLine(43, 70, 2, 40, RED;
