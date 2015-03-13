@@ -16,49 +16,153 @@ void pyyhiruutu() {
 
 void piirraKanavat (int8_t kanava) {
   
-  void drawRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
+  void drawRect(uint16_t x0, 70, uint16_t w, uint16_t h, uint16_t color);
   void fillRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
   
 }
 
+void piiraVedin(int8_t vedin){
+  int y;
+  int x;
+  switch(vedin){ 
+    //keskipisteet
+    case 0: 
+      y = volume;
+      x= 290;
+      brake;
+    case 1: 
+      y = 90;
+      x = channel[currentChannel].getBalanssi;
+      brake;
+     case 2:
+      y = 150;
+      x = channel[currentChannel].getBasso;
+     brake; 
+     case 3;
+      y = 210;
+      x = channel[currentChannel].getDiskantti;
+      brake;
+    
+  }
+  if(vedin==0){
+  //volume slideri
+  tft.drawRoundRect(x-20, y-10, x+20, y+10, 6, BLACK);
+  tft.fillRoundRect(x-19, y-9, x+19, y+10, 6, WHITE);  
+  }
+  else {
+    //muut sliderit
+    tft.drawRoundRect(x-10, y-20, x+10, y+20, 6, BLACK);
+    tft.fillRoundRect(x-9, y-19, x+9, y+19, 6, WHITE);
+  }  
+  
+}
+
+void poistaVedin(int8_t vedin){
+  int y, x;
+  switch(vedin){ 
+    case 0:
+      x = 290
+      y = volume
+      brake;
+    case 1: 
+      x = channel[currentChannel].getBalanssi;
+      y = 90;
+      brake;
+     case 2:
+      x = channel[currentChannel].getBasso;
+      y = 150;
+     brake; 
+     case 3;
+      x = channel[currentChannel].getDiskantti; 
+      y = 210;
+      brake;
+  }
+  //volume slideri poisto
+  if(vedin==0){
+  tft.fillRect(x-20, y-10, x-10, 20,  BLUE);
+  tft.fillRect(x-10, y-10, x+10, 20,  WHITE);
+  tft.fillRect(x+20, y-10, x+10, 20,  BLUE);
+  }
+  else {
+    //muiden sliderien poisto
+  tft.fillRect(x-10, y-20, x+10, 10,  BLUE);
+  tft.fillRect(x-10, y-10, x+10, 20,  WHITE);
+  tft.fillRect(x-10, y+10, x+10, 10,  BLUE);
+  }
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+
+
 void piirraMute() {
    //Piirretään mutelaatikon kehys
-   void drawRect(0, 60, 60, 60, CYAN);
+   tft.drawRect(0, 60, 60, 60, CYAN);
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (channel[currentChannel].getMute == false) fillRect(1,  61, 58, 58, GREEN);
-   else fillRect(1,  61, 58, 58, RED);
+   if (channel[currentChannel].getMute == false) tft.fillRect(1,  61, 58, 58, GREEN);
+   else tft.fillRect(1,  61, 58, 58, RED);
    //Piirretään kajarikuvake ja otetaan huomioon kanavakohtainen asetus
-     void drawLine(5, 80, 3, 20, WHITE);
-     void drawLine(8, 80, 3, 20, WHITE);
-     //väli
-     void drawLine(9, 80, 3, 20, WHITE);
-     void drawLine(12, 78, 3, 24, WHITE);
-     void drawLine(15, 76, 3, 28, WHITE);
-     void drawLine(18, 74, 3, 32, WHITE);
-     void drawLine(21, 72, 3, 34, WHITE);
-     void drawLine(24, 70, 3, 36, WHITE);
-     void drawLine(27, 68, 3, 38, WHITE);
-     void drawLine(30, 66, 3, 40, WHITE);
+   //Piirretään magneetti
+    tft.fillRect(1,  61, 58, 58, RED);
+    //Piirretään kajari
+    int x =17;
+    int y = 83;
+    int h = 17;
+    for (i=0; i<13; i++) {
+       tft.drawLine(x,y,1,h,WHITE);
+      x++;
+      y--;
+      h=h+2;
+    }
+     
+     
    if (channel[currentChannel].getMute == false) {
    
      
      //kajari viivat
-     void drawLine(34, 90, 1, 1, WHITE);
-     void drawLine(37, 80, 2, 20, WHITE;
-     void drawLine(43, 70, 2, 40, WHITE;
-     void drawLine(39, 60, 2, 60, WHITE;
-     
+     tft.drawLine(33, 28, 1, 4, WHITE);
+     tft.drawLine(36, 80, 1, 4, WHITE;
+     tft.drawLine(36, 96, 1, 4, WHITE;
+     tft.drawLine(39, 83, 1, 10, WHITE;
+     tft.drawLine(42, 76, 1, 4, WHITE;
+     tft.drawLine(42, 100, 1, 4, WHITE;
+     tft.drawLine(45, 80, 1, 20, WHITE;
      
    }
    else {
     //Häivytetään kajarin kaikuviivat taustaan
-     void drawLine(34, 90, 1, 1, RED);
-     void drawLine(37, 80, 2, 20, RED;
-     void drawLine(43, 70, 2, 40, RED;
-     void drawLine(39, 60, 2, 60, RED;
-     
-     
-     
+     tft.drawLine(33, 28, 1, 4, RED);
+     tft.drawLine(36, 80, 1, 4, RED;
+     tft.drawLine(36, 96, 1, 4, RED;
+     tft.drawLine(39, 83, 1, 10, RED;
+     tft.drawLine(42, 76, 1, 4, RED;
+     tft.drawLine(42, 100, 1, 4, RED;
+     tft.drawLine(45, 80, 1, 20, RED;
    }
-  
 }  
+
+  void piirraKompressori(){
+    //Piirretään mutelaatikon kehys kesken!!
+   tft.drawRect(0, 60, 60, 60, CYAN);
+   //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
+   if (channel[currentChannel].getKompressori == false) tft.fillRect(1,  61, 58, 58, RED);
+   else tft.fillRect(1,  61, 58, 58, GREEN);
+   //kesken katso vihko
+   tft.drawLine(270, 220, 10, 3, WHITE;
+   
+   
+  }
+  
+  void piirraLoudness(){
+    //kehys vielä kesken
+  tft.drawRect(0, 60, 60, 60, CYAN);
+   //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
+   if (loudness == false) tft.fillRect(1,  61, 58, 58, RED);
+   else tft.fillRect(1,  61, 58, 58, GREEN);
+   tft.drawLine(270, 220, 10, 3, WHITE;
+   tft.drawLine(280, 205, 3, 15, WHITE;
+   tft.drawLine(280, 205, 20, 3, WHITE;
+   tft.drawLine(300, 205, 3, 15, WHITE;
+   tft.drawLine(300, 220, 10, 3, WHITE;
+  }
+  
+  
