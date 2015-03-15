@@ -1,4 +1,4 @@
-/* 320*240 pikseliä
+ /* 320*240 pikseliä
   laatikon mitat = 64 * 60 pikseliä
   pystylaatikoiden mitat = 60 * 60 pikseliä
   volansäätimen mitat = 64 * 240 pikseliä 
@@ -13,14 +13,14 @@
 void pyyhiruutu() {  
  tft.fillScreen(BLACK); 
 }
-
+//Kanavat puuttuu!!!!!
 void piirraKanavat (int8_t kanava) {
   
   void drawRect(uint16_t x0, 70, uint16_t w, uint16_t h, uint16_t color);
   void fillRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
   
 }
-
+//Vetimen piirto
 void piiraVedin(int8_t vedin){
   int y;
   int x;
@@ -56,10 +56,11 @@ void piiraVedin(int8_t vedin){
   }  
   
 }
-
+//Vetimen poisto
 void poistaVedin(int8_t vedin){
   int y, x;
   switch(vedin){ 
+    //Keskipisteet
     case 0:
       x = 290
       y = volume
@@ -141,22 +142,32 @@ void piirraMute() {
 }  
 
   void piirraKompressori(){
-    //Piirretään mutelaatikon kehys kesken!!
-   tft.drawRect(0, 60, 60, 60, CYAN);
+    //Piirretään mutelaatikon !!
+   tft.drawRect(0, 180, 60, 60, CYAN);
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (channel[currentChannel].getKompressori == false) tft.fillRect(1,  61, 58, 58, RED);
-   else tft.fillRect(1,  61, 58, 58, GREEN);
-   //kesken katso vihko
-   tft.drawLine(270, 220, 10, 3, WHITE;
+   if (channel[currentChannel].getKompressori == false) tft.fillRect(1,  181, 58, 58, RED);
+   else tft.fillRect(1,  181, 58, 58, GREEN);
+   //kompressorin kuvake
+   tft.drawLine(15, 190, 30, 2, WHITE;
+   tft.drawLine(45, 190, 2, 10, WHITE;
+   tft.drawLine(15, 190, 2, 30, WHITE;
+   tft.drawLine(15, 220, 25, 2, WHITE;
+   tft.drawLine(40, 118, 10, 4, WHITE;
+   tft.drawLine(44, 222, 2, 8, WHITE;
+   tft.drawLine(20, 195, 20, 1, WHITE;
+   tft.drawLine(20, 200, 20, 1, WHITE;
+   tft.drawLine(20, 205, 20, 1, WHITE;
+   tft.drawLine(20, 210, 20, 1, WHITE;
+   tft.drawLine(20, 215, 20, 1, WHITE;
    
    
   }
   
   void piirraLoudness(){
-    //kehys vielä kesken
-  tft.drawRect(0, 60, 60, 60, CYAN);
+    //kehys
+  tft.drawRect(260, 180, 60, 60, CYAN);
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (loudness == false) tft.fillRect(1,  61, 58, 58, RED);
+   if (loudness == false) tft.fillRect(261,  181, 58, 58, RED);
    else tft.fillRect(1,  61, 58, 58, GREEN);
    tft.drawLine(270, 220, 10, 3, WHITE;
    tft.drawLine(280, 205, 3, 15, WHITE;
