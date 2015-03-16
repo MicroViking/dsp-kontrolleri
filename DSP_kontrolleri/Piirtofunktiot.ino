@@ -10,35 +10,36 @@
   Maksimi 320 x = oikea reuna
 */
 void teeLayout(){
-   //Piirretään mutelaatikon kehys
-   //tft.drawRect(0, 60, 60, 60, CYAN);
-   //Piirretään kompressori !!
-   //tft.drawRect(0, 180, 60, 60, CYAN);
-   //Loudnessin kehys
-   //tft.drawRect(260, 180, 60, 60, CYAN);
-   //Balanssi, Basso, Diskantti sliderien kehys
-   //tft.drawRect(60, 60, 200, 180, CYAN);
-   
    //Paksut viivat
    tft.fillRect(58, 60, 2, 120, CYAN);
    tft.fillRect(0, 55, 260, 4,CYAN);
    tft.fillRect(260, 0, 3, 240, CYAN);
    //Ohuet viivat ylhäällä
-   tft.fillRect(64, 0, 1, 57, CYAN);
-   tft.fillRect(128, 0, 1, 57, CYAN);
-   tft.fillRect(192, 0, 1, 57, CYAN);
+   tft.fillRect(64, 0, 2, 57, RED);
+   tft.fillRect(129, 0, 2, 57, RED);
+   tft.fillRect(194, 0, 2, 57, RED);
    //Ohuet viivat vaakatasossa
    tft.fillRect(0, 120, 60, 1, CYAN);
    tft.fillRect(0, 180, 60, 1, CYAN);
-   tft.fillRect(260, 120, 60, 1, CYAN);
+   tft.fillRect(260, 180, 60, 1, CYAN);
+   //Pystyssä olevat viivat
+   tft.fillRect(59, 59, 1, 180, CYAN);
+   //Slideri laatikon täyttö
+   tft.fillRect(60, 59, 200, 181, ORANGE);
+   //Volume sliderin laatikko
+   tft.fillRect(263, 0, 57, 180, ORANGE);
    //Balanssin viiva
-   tft.drawRoundRect(70, 80, 180, 20, 10, WHITE);
+   //tft.drawRoundRect(70, 80, 180, 20, 10, WHITE);
+   tft.fillRoundRect(71, 81, 178, 18, 10, WHITE);
    //Basson viiva
-   tft.drawRoundRect(70, 240, 180, 20, 10, WHITE);
+   //tft.drawRoundRect(70, 150, 180, 20, 10, WHITE);
+   tft.fillRoundRect(70, 140, 180, 20, 10, WHITE);
    //Diskantin viiva
-   tft.drawRoundRect(70, 300, 180, 20, 10, WHITE);
+   //tft.drawRoundRect(70, 200, 180, 20, 10, WHITE);
+   tft.fillRoundRect(70, 200, 180, 20, 10, WHITE);
    //Volume viiva
-   tft.drawRoundRect(180, 10, 20, 160, 10, WHITE);
+   //tft.drawRoundRect(180, 10, 20, 160, 10, WHITE);
+   tft.fillRoundRect(280, 10, 20, 160, 10, WHITE);
    //Piirretään tyhjä loora
    tft.fillRect(0, 121, 59, 58, BLUE);
    
@@ -70,20 +71,20 @@ void piirraKanava(uint8_t i, bool boot){
   if(boot == true){
   //kanava yksi
     tft.fillRect(0, 0, 64, 56, LIGHTGREY);
-    tft.drawChar(10, 10, '1', BLACK, 3);
-    tft.drawString(30, 30, "ch", BLACK, 1);
+    tft.drawChar(15, 10, '1', BLACK, 3);
+    tft.drawString(35, 30, "ch", BLACK, 1);
     //kanava 2
-    tft.fillRect(66, 0, 65,56, BLUE);
-    tft.drawChar(76, 10, '2', WHITE, 3);
-    tft.drawString(96, 30, "ch", WHITE, 1);
+    tft.fillRect(66, 0, 64,56, BLUE);
+    tft.drawChar(81, 10, '2', WHITE, 3);
+    tft.drawString(101, 30, "ch", WHITE, 1);
     //Kanava 3
-    tft.fillRect(131, 0, 65,56, BLUE);
-    tft.drawChar(141, 10, '3', WHITE, 3);
-    tft.drawString(161, 30, "ch", WHITE, 1);
+    tft.fillRect(131, 0, 64,56, BLUE);
+    tft.drawChar(146, 10, '3', WHITE, 3);
+    tft.drawString(166, 30, "ch", WHITE, 1);
     //Kanava 4
-    tft.fillRect(196, 0, 65,56, BLUE);
-    tft.drawChar(206, 10, '4', WHITE, 3);
-    tft.drawString(226, 30, "ch", WHITE, 1);
+    tft.fillRect(196, 0, 64,56, BLUE);
+    tft.drawChar(211, 10, '4', WHITE, 3);
+    tft.drawString(231, 30, "ch", WHITE, 1);
   }
   else {
     char numero[1];
@@ -146,13 +147,15 @@ void piirraVedin(int8_t vedin){
   }
   if(vedin==0){
   //volume slideri
-  tft.drawRoundRect(x-20, y-10, x+20, y+10, 6, BLACK);
+//  tft.drawRoundRect(x-20, y-10, x+20, y+10, 6, BLACK);
   tft.fillRoundRect(x-19, y-9, x+19, y+10, 6, WHITE);  
   }
   else {
     //muut sliderit
-    tft.drawRoundRect(x-10, y-20, x+10, y+20, 6, BLACK);
-    tft.fillRoundRect(x-9, y-19, x+9, y+19, 6, WHITE);
+   // tft.drawRoundRect(x-10, y-20, x+10, y+20, 6, BLACK);
+   
+   //JOTAIN PIELESSÄ!!!!
+  //  tft.fillRoundRect(x-9, y-19, x+9, y+19, 6, WHITE);
   }  
   
 }
@@ -198,11 +201,11 @@ void poistaVedin(int8_t vedin){
 void piirraMute() {
 
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (channel[currentChannel].mute == false) tft.fillRect(1,  61, 58, 58, GREEN);
-   else tft.fillRect(1,  61, 58, 58, RED);
+   if (channel[currentChannel].mute == false) tft.fillRect(0,  59, 58, 60, GREEN);
+   else tft.fillRect(0,  59, 58, 60, RED);
    //Piirretään kajarikuvake ja otetaan huomioon kanavakohtainen asetus
    //Piirretään magneetti
-    tft.fillRect(1,  61, 58, 58, RED);
+    tft.fillRect(13,  84, 3, 15, WHITE);
     //Piirretään kajari
     int x =17;
     int y = 83;
@@ -243,14 +246,14 @@ void piirraMute() {
   void piirraKompressori(){
     
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (channel[currentChannel].kompressori == false) tft.fillRect(1,  181, 58, 58, RED);
-   else tft.fillRect(1,  181, 58, 58, GREEN);
+   if (channel[currentChannel].kompressori == false) tft.fillRect(0,  181, 59, 59, RED);
+   else tft.fillRect(0,  181, 59, 59, GREEN);
    //kompressorin kuvake
    tft.fillRect(15, 190, 30, 2, WHITE);
    tft.fillRect(45, 190, 2, 10, WHITE);
    tft.fillRect(15, 190, 2, 30, WHITE);
    tft.fillRect(15, 220, 25, 2, WHITE);
-   tft.fillRect(40, 118, 10, 4, WHITE);
+   tft.fillRect(40, 219, 10, 4, WHITE);
    tft.fillRect(44, 222, 2, 8, WHITE);
    tft.fillRect(20, 195, 20, 1, WHITE);
    tft.fillRect(20, 200, 20, 1, WHITE);
@@ -264,8 +267,8 @@ void piirraMute() {
   void piirraLoudness(){
     
    //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
-   if (output.loudness == false) tft.fillRect(261,  181, 58, 58, RED);
-   else tft.fillRect(1,  61, 58, 58, GREEN);
+   if (output.loudness == false) tft.fillRect(263,  181, 58, 59, RED);
+   else tft.fillRect(263,  181, 58, 59, GREEN);
    tft.fillRect(270, 220, 10, 3, WHITE);
    tft.fillRect(280, 205, 3, 18, WHITE);
    tft.fillRect(280, 205, 20, 3, WHITE);
