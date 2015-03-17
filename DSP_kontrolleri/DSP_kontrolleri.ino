@@ -1,11 +1,9 @@
-#include "TFTLCD.h"
-#include "TouchScreen.h"
+#include <inttypes.h>
+#include <TFTLCD.h>
+#include <TouchScreen.h>
 #include <Wire.h>
 
-void piirraKanava(uint8_t i, bool boot = false);
-void poistaKanava(uint8_t i);
-void piirraVedin(int8_t vedin);
-
+#define ROTATION 0;
 //DSB osoitteet eri registereille
 #define input1MuteOsoite 33
 #define input1KompressoriOsoite 43
@@ -27,23 +25,29 @@ void piirraVedin(int8_t vedin);
 #define YM 7   // can be a digital pin
 #define XP 6   // can be a digital pin
 
-#define TS_MINX 150
-#define TS_MINY 120
-#define TS_MAXX 920
-#define TS_MAXY 940
+#define TS_MINX 120
+#define TS_MINY 80
+#define TS_MAXX 900
+#define TS_MAXY 1024
 
 // For better pressure precision, we need to know the resistance
 // between X+ and X- Use any multimeter to read it
 // For the one we're using, its 300 ohms across the X plate
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
+// Kosketus muuttuja
+TSPoint p;
 
+#define MINPRESSURE 10
+#define MAXPRESSURE 1000
+
+//LCD Pinnien asetukset
 #define LCD_CS A3
 #define LCD_CD A2
 #define LCD_WR A1
 #define LCD_RD A0 
 // optional
 #define LCD_RESET A4
-#define ROTATION 3
+
 
 // Color definitions
 #define BLACK           0x0000      /*   0,   0,   0 */
@@ -66,13 +70,12 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 #define GREENYELLOW     0xAFE5      /* 173, 255,  47 */
 #define PINK            0xF81F
 
-
+// TFT objekti
 TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-
+// i2c Objekti
 TwoWire i2c;
 
 //Sisääntuloasetukset
-
 struct audioKanava {
     bool mute;
     bool kompressori;
@@ -83,8 +86,6 @@ struct audioKanava {
 };
 //Neljä sisääntuloa
 struct audioKanava channel[4];
-
-
 
 //Ulostuloasetukset
 struct ulostulo {
@@ -98,56 +99,67 @@ struct ulostulo {
 };
 //Yksi ulostulo
 ulostulo output;
-
-int oldcolor, currentcolor;
-
+//Mikä kanava on auki milloinkin
 uint8_t currentChannel = 0;
 
 
-void setup(void) {
+void setup() {
   Serial.begin(9600);
   i2c.begin();
-  channel[0].muteOsoite = input1MuteOsoite;
-  channel[0].kompressoriOsoite = input1MuteOsoite;
-  channel[1].muteOsoite = input2MuteOsoite;
-  channel[1].kompressoriOsoite = input2MuteOsoite;
-  channel[1].muteOsoite = input2MuteOsoite;
-  channel[1].kompressoriOsoite = input2MuteOsoite;
-  channel[1].muteOsoite = input2MuteOsoite;
-  channel[1].kompressoriOsoite = input2MuteOsoite;
-  
+  setupVariables();
+   
   tft.reset();
+  tft.initDisplay();
   
-  /*
-  uint16_t identifier = tft.readRegister(0x0);
-  if (identifier == 0x9325) {
-    Serial.println("Found ILI9325");
-  } else if (identifier == 0x9328) {
-    Serial.println("Found ILI9328");
-  } else {
-    Serial.print("Unknown driver chip ");
-    Serial.println(identifier, HEX);
-    while (1);
-  }
-*/
-  tft.initDisplay(); 
-  tft.setRotation(ROTATION);
-  //Serial.println(audioKanava[0].getMute);
-  tft.fillScreen(BLACK);
-  
+  tft.setRotation(1);
+  tft.fillScreen(BLUE); 
   //Tulostetaaan aloitusruutu
   teeLayout();
-  pinMode(13, OUTPUT);
+  pinMode(10, OUTPUT);
 }
 
-
-
-#define MINPRESSURE 10
-#define MAXPRESSURE 1000
-
-
-
-void loop()
-{
- 
+void loop() {
+  ///Luetaan kosketuspiste
+  int kosketus = tarkistatouch();
+  switch (kosketus) {
+    case 0:
+      break;
+    case 1:
+      if (currentChannel != 0) {
+        poistaKanava();
+        //Päivitetään valittu kanava muuttujaan
+        currentChannel = kosketus-1;
+        //Väritetään kanavan tausta uudestaan
+        piirraKanava(false);
+      }
+      break;
+    case 2:
+      if (currentChannel != 1) {
+        poistaKanava();
+        //Päivitetään valittu kanava muuttujaan
+        currentChannel = kosketus-1;
+        //Väritetään kanavan tausta uudestaan
+        piirraKanava(false);
+      }
+      break; 
+    case 3:
+      if (currentChannel != 2) {
+        poistaKanava();
+        //Päivitetään valittu kanava muuttujaan
+        currentChannel = kosketus-1;
+        //Väritetään kanavan tausta uudestaan
+        piirraKanava(false);
+      }
+      break;
+      case 4:
+      if (currentChannel != 3) {
+        poistaKanava();
+        //Päivitetään valittu kanava muuttujaan
+        currentChannel = kosketus-1;
+        //Väritetään kanavan tausta uudestaan
+        piirraKanava(false);
+      }
+      break;
+  }
+  //palautaPinnit();
 }
