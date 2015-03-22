@@ -391,5 +391,37 @@ void piirraLoudness(){
    tft.fillRect(300, 210, 10, 3, WHITE);
    tft.drawString(268, 225, "Loudness", ORANGE, 1);
 }
-  
-  
+/*
+void piirraDefault(){
+  if (channel[kanava].default == false){ 
+  //Ympyröiden piirto
+  tftfillCircle(60, 150, 20, PINK);
+  tftfillCircle(60, 150, 5, PURPLE);
+  //Neljän viivan piirto
+  tft.fillRect(30, 132, 3, 10, WHITE);
+  ft.fillRect(30, 158, 3, 10, WHITE);
+  tft.fillRect(12, 150, 10, 3, WHITE);
+  tft.fillRect(38, 150, 10, 3, WHITE);
+    }
+  else{
+    //Kun painetaan nappia sisempi ympyrä alkaa kasvaa
+   int x =5;
+    for (int i=0; i<15; i++) {
+     tft.fillCircle(60, 150, x, PURPLE);
+     x++;
+     //Kun purple on kasvanut 20 saakka pinkki alkaa maalata ulkoreunasta sisäänpäin
+        if (x == 20){
+          for (int i=0; i<15; i++) {
+          tftfillCircle(60, 150, x, PINK);
+          x--;
+        }
+      }
+     //Neljän viivan piirto
+     tft.fillRect(30, 132, 3, 10, WHITE);
+     tft.fillRect(30, 158, 3, 10, WHITE);
+     tft.fillRect(12, 150, 10, 3, WHITE);
+     tft.fillRect(38, 150, 10, 3, WHITE);
+    } 
+  }
+}
+  */
