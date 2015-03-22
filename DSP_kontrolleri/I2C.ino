@@ -17,36 +17,50 @@
 
 */
 
-void sendDSPcommand (uint8_t registeri, uint8_t value) {
-    uint8_t osoite = 0x69; //DSP piirin osoite kirjoitusbitillä
-    i2c.beginTransmission(osoite); // Kutsutaan DSP:tä ottamaan dataa vastaa ja ensimäinen bitti on kirjoitus
-    i2c.write(registeri);        // Kerrotaan DSP:lle mihen registeriin kirjoitetaan
-    i2c.write(value);              // Kirjoitetaan valituun regeisteriin   
-    i2c.endTransmission();    // stop transmitting
-    delay(1);   
-  }
+void DSPkomento (uint8_t registeri, uint8_t tavut[], uint8_t lkm) {
+    
+   uint8_t osoite = 0x68; //DSP piirin osoite kirjoitusbitillä
+   i2c.beginTransmission(osoite); // Kutsutaan DSP:tä ottamaan dataa vastaa ja ensimäinen bitti on kirjoitus
+   i2c.write(registeri); // Kerrotaan DSP:lle mihen registeriin kirjoitetaan
+      
+   i2c.write(tavut, lkm); // Kirjoitetaan tavut  
+      
+   i2c.endTransmission();    // stop transmitting
+    
+      
+}
 /*TODO
   Voimakkuus sliderien i2c rajapinnan tarvitsemia funktioita. Palautettavat arvot pitää olla tavun kokoisia
 */
 //Palautetaan positiiveset voluumi asetukset DSP voluumin säätööön 
-uint8_t getOikeaVoimakkuus (uint8_t i) {
-  uint8_t balanssi = channel[currentChannel].balanssiKoordinaatti;
-  balanssi = map(balanssi, 75, 245, -100, 100);
-  if (balanssi >= 0) return 0;
-  //koska luvut ovat negatiivisia niin pitää lisätä balanssin arvo 100 jolloin luku hiipuu sadasta kohti nollaa.
-  else return 100 + balanssi;
+int8_t i2cVedin(uint8_t vedin) {
+  uint8_t x;
+  switch (vedin) {
+    case 1: 
+      x = map(channel[currentChannel].balanssiKoordinaatti, 90, 230, 0, 40);
+      break;
+    case 2:
+      x = map(channel[currentChannel].bassoKoordinaatti, 90, 230, 0, 40);
+      break;
+    case 3:
+      x = map(channel[currentChannel].diskanttiKoordinaatti, 90, 230, 0, 40);
+      break;
+  }
+  if (x < 21) x = (20-x)*-1;
+  else x = x-20;
+  //Palautetaan negatiivisia lukuja tai positiivisä DSP:lle
+  //channel[currentChannel].i2cTone[3] = x;
+  return x;
 }
-uint8_t getVasenVoimakkuus (uint8_t i) {
-  uint8_t balanssi = channel[currentChannel].balanssiKoordinaatti;
-  balanssi = map(balanssi, 75, 245, -100, 100);
-  if (balanssi <= 0) return 0;
-  //Koska luvut ovat postiivisia niin miinustetaan sadasta joten luku hiipuu kohti nollaa
-  else return 100 - balanssi;
-}
-uint8_t getVoimakkuus (uint8_t i) {
-  uint8_t y = output.volumeKoordinaatti;
-  y = map(y, 15, 165, -10, 100);
-  if (y <= 0) return 0 - y;
-  //Koska luvut ovat postiivisia niin miinustetaan sadasta joten luku hiipuu kohti nollaa
-  else return 0 - y;
+
+int8_t i2cVoimakkuus() {
+  //Mapataan volumen koordinaatit DSB voluumi lukuihin
+  int8_t x = map(output.volumeKoordinaatti, 25, 145, 0, 130);
+  //DSB:ssä volumea voi kasvatta 10db
+  if (x < 11) x = 10-x;
+  //Koska volume on 0:sta -120db pitää 130 luvut pienentää 10:llä ja kertoa negatiiviseksi
+  else x = (x-10)*-1;
+  //Serial.print("Voimakkuus: ");
+  //Serial.println(x);
+  return x;
 }

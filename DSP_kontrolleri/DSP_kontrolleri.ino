@@ -28,7 +28,7 @@
 #define TS_MINX 120
 #define TS_MINY 80
 #define TS_MAXX 900
-#define TS_MAXY 1024
+#define TS_MAXY 970
 
 // For better pressure precision, we need to know the resistance
 // between X+ and X- Use any multimeter to read it
@@ -77,12 +77,26 @@ TwoWire i2c;
 
 //Sisääntuloasetukset
 struct audioKanava {
+    // Kanava kohtaiset boolean muuttujat
     bool mute;
     bool kompressori;
-    uint8_t bassoKoordinaatti; // Bassosliderin koordinaatti
+    
+    // kanavakohtaisten slidereiden koordinaatit
+    uint8_t bassoKoordinaatti; 
     uint8_t diskanttiKoordinaatti;
     uint8_t balanssiKoordinaatti;
-    uint8_t muteOsoite, kompressoriOsoite;  
+    
+    //i2c registeriosoitteet
+    uint8_t muteOsoite;
+    uint8_t kompressoriOsoite;
+    uint8_t toneOsoite;
+    
+    //i2c tulostus taulukot
+    uint8_t i2cTone[4];
+    uint8_t i2cVasen[4];
+    uint8_t i2cOikea[4];
+    uint8_t i2cMute[4];
+    uint8_t i2cKomp[8];
 };
 //Neljä sisääntuloa
 struct audioKanava channel[4];
@@ -92,16 +106,16 @@ struct ulostulo {
   bool loudness;
   uint8_t volumeKoordinaatti;
   uint8_t volumeOsoite;
-  uint8_t toneOsoite;
-  uint8_t vasenOsoite;
-  uint8_t oikeaOsoite;
   uint8_t loudnessOsoite;
+  //i2c tulostus taulukot
+  uint8_t i2cVolume[4];
+  uint8_t i2cLoud[4];
 };
 //Yksi ulostulo
 ulostulo output;
 //Mikä kanava on auki milloinkin
 uint8_t currentChannel = 0;
-
+bool boot = true;
 
 void setup() {
   Serial.begin(9600);
@@ -116,6 +130,7 @@ void setup() {
   //Tulostetaaan aloitusruutu
   teeLayout();
   pinMode(10, OUTPUT);
+  boot = false;
 }
 
 void loop() {
@@ -123,43 +138,46 @@ void loop() {
   int kosketus = tarkistatouch();
   switch (kosketus) {
     case 0:
-      break;
+        //Kaikki kanavan sisäiset funktiot palauttava nollan
+        //delay(10);
+        break;
     case 1:
-      if (currentChannel != 0) {
-        poistaKanava();
-        //Päivitetään valittu kanava muuttujaan
-        currentChannel = kosketus-1;
-        //Väritetään kanavan tausta uudestaan
-        piirraKanava(false);
-      }
-      break;
+        Serial.println("Suoritetaan tapaus 1.");
+        Serial.println("Piirretaan kanava 1");
+        piirraKanava(0);
+        //Koska tahdotaan nopeuttaa kanavan vaihdossa piirtoaikaa tarkastetaan ovatko eri kanavien asetusarvot samat
+        //ja tarvittaessa päivitetään kanavan laatikot ja sliderit
+        tarkastaPiirto(0);
+        //Päivitetään nykyinen kanava muuttuja
+        currentChannel = 0;
+        //delay(10);
+        break;
     case 2:
-      if (currentChannel != 1) {
-        poistaKanava();
-        //Päivitetään valittu kanava muuttujaan
-        currentChannel = kosketus-1;
-        //Väritetään kanavan tausta uudestaan
-        piirraKanava(false);
-      }
-      break; 
+        Serial.println("Suoritetaan tapaus 2.");
+        Serial.println("Piirretaan kanava 2");
+        piirraKanava(1);
+        tarkastaPiirto(1);
+        currentChannel = 1;
+        //delay(10);
+        break; 
     case 3:
-      if (currentChannel != 2) {
-        poistaKanava();
-        //Päivitetään valittu kanava muuttujaan
-        currentChannel = kosketus-1;
-        //Väritetään kanavan tausta uudestaan
-        piirraKanava(false);
-      }
-      break;
-      case 4:
-      if (currentChannel != 3) {
-        poistaKanava();
-        //Päivitetään valittu kanava muuttujaan
-        currentChannel = kosketus-1;
-        //Väritetään kanavan tausta uudestaan
-        piirraKanava(false);
-      }
-      break;
+        Serial.println("Suoritetaan tapaus 3.");
+        Serial.println("Piirretaan kanava 3");
+        piirraKanava(2);
+        tarkastaPiirto(2);
+        currentChannel = 2;
+        //delay(10);
+        break;
+    case 4:
+        Serial.println("Suoritetaan tapaus 4.");
+        Serial.println("Piirretaan kanava 4");
+        piirraKanava(3);
+        tarkastaPiirto(3);
+        currentChannel = 3;
+        //delay(10);
+        break;
   }
+  
   //palautaPinnit();
+  //delay(10);
 }
