@@ -142,7 +142,6 @@ void loop() {
         //delay(10);
         break;
     case 1:
-        Serial.println("Suoritetaan tapaus 1.");
         Serial.println("Piirretaan kanava 1");
         piirraKanava(0);
         //Koska tahdotaan nopeuttaa kanavan vaihdossa piirtoaikaa tarkastetaan ovatko eri kanavien asetusarvot samat
@@ -153,7 +152,6 @@ void loop() {
         //delay(10);
         break;
     case 2:
-        Serial.println("Suoritetaan tapaus 2.");
         Serial.println("Piirretaan kanava 2");
         piirraKanava(1);
         tarkastaPiirto(1);
@@ -161,7 +159,6 @@ void loop() {
         //delay(10);
         break; 
     case 3:
-        Serial.println("Suoritetaan tapaus 3.");
         Serial.println("Piirretaan kanava 3");
         piirraKanava(2);
         tarkastaPiirto(2);

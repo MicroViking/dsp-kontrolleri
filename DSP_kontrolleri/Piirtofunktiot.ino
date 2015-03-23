@@ -135,9 +135,13 @@ void piirraSliderit() {
 
 void piirraKanavat() {
     piirraKanava(3);
+    currentChannel = 3;
     piirraKanava(2);
+    currentChannel = 2;
     piirraKanava(1);
-    piirraKanava(0);   
+    currentChannel = 1;
+    piirraKanava(0);
+    currentChannel = 0;   
 }
 void piirraLaatikot() {
     piirraMute(currentChannel);
@@ -149,7 +153,7 @@ void piirraKanava(uint8_t kanava) {
   uint8_t x = palautaKoordinaatti(kanava);
   if (kanava != currentChannel) {
       poistaKanava(currentChannel);
-      currentChannel = kanava;
+      //currentChannel = kanava;
       char numero[1];
       sprintf(numero, "%i",kanava+1);
       tft.fillRect(x, 0, 63, 57, LIGHTGREY);
@@ -233,7 +237,19 @@ void piirraVedin(uint8_t kanava, uint8_t vedin){
   }
   else {
     //muut sliderit
-    int16_t u = i2cVedin(vedin);
+    int16_t u;
+    switch (vedin) {
+        case 1:
+          u = i2cLuku(channel[kanava].balanssiKoordinaatti);
+          break;
+        case 2:
+          u = i2cLuku(channel[kanava].bassoKoordinaatti);
+          break;
+        case 3:
+          u = i2cLuku(channel[kanava].diskanttiKoordinaatti);
+          break; 
+    }
+    
     Serial.print("i2C luku: ");
     Serial.println(u);    
     int16_t x = 0;
@@ -247,7 +263,7 @@ void piirraVedin(uint8_t kanava, uint8_t vedin){
     else if (u < 10) {
       x = xy[0]-3;
     }
-    else if (u < 21) {
+    else if (u < 22) {
       x = xy[0]-6;
     }
     //Luvun muutos charriksi
@@ -391,37 +407,26 @@ void piirraLoudness(){
    tft.fillRect(300, 210, 10, 3, WHITE);
    tft.drawString(268, 225, "Loudness", ORANGE, 1);
 }
-/*
+  
+  
 void piirraDefault(){
-  if (channel[kanava].default == false){ 
-  //Ympyröiden piirto
-  tftfillCircle(60, 150, 20, PINK);
-  tftfillCircle(60, 150, 5, PURPLE);
-  //Neljän viivan piirto
-  tft.fillRect(30, 132, 3, 10, WHITE);
-  ft.fillRect(30, 158, 3, 10, WHITE);
-  tft.fillRect(12, 150, 10, 3, WHITE);
-  tft.fillRect(38, 150, 10, 3, WHITE);
-    }
-  else{
-    //Kun painetaan nappia sisempi ympyrä alkaa kasvaa
-   int x =5;
-    for (int i=0; i<15; i++) {
-     tft.fillCircle(60, 150, x, PURPLE);
-     x++;
-     //Kun purple on kasvanut 20 saakka pinkki alkaa maalata ulkoreunasta sisäänpäin
-        if (x == 20){
-          for (int i=0; i<15; i++) {
-          tftfillCircle(60, 150, x, PINK);
-          x--;
-        }
-      }
-     //Neljän viivan piirto
-     tft.fillRect(30, 132, 3, 10, WHITE);
-     tft.fillRect(30, 158, 3, 10, WHITE);
-     tft.fillRect(12, 150, 10, 3, WHITE);
-     tft.fillRect(38, 150, 10, 3, WHITE);
-    } 
-  }
+  //Täytetään laatikko sinisellä
+  tft.fillRect(0, 120, 60, 60, BLUE);
+  //Ympyrän piirto
+  tft.fillCircle(60, 150, 15, WHITE);
+  tft.drawString(20, 140, "D", ORANGE, 3); 
 }
-  */
+void poistaDefault(){
+  //Peittää alkuperäisen ympyrän
+ tft.fillCircle(60, 150, 15, BLUE); 
+ //Piirtää D kirjaimen
+ tft.drawString(20, 140, "D", WHITE, 3);
+ //Piirtää muutaman pixelin paksuiset ympyrän kehät
+ tft.drawCircle(60, 150, 25, WHITE);
+ tft.drawCircle(60, 150, 26, WHITE);
+ tft.drawCircle(60, 150, 24, WHITE);
+ 
+ tft.drawCircle(60, 150, 15, WHITE);
+ tft.drawCircle(60, 150, 16, WHITE);
+ tft.drawCircle(60, 150, 17, WHITE); 
+}
