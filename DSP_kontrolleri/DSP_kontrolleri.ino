@@ -72,6 +72,7 @@ TSPoint p;
 
 // TFT objekti
 TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
 // i2c Objekti
 TwoWire i2c;
 
@@ -90,6 +91,8 @@ struct audioKanava {
     uint8_t muteOsoite;
     uint8_t kompressoriOsoite;
     uint8_t toneOsoite;
+    uint8_t vasenOsoite;
+    uint8_t oikeaOsoite;
     
     //i2c tulostus taulukot
     uint8_t i2cTone[4];
@@ -109,7 +112,7 @@ struct ulostulo {
   uint8_t loudnessOsoite;
   //i2c tulostus taulukot
   uint8_t i2cVolume[4];
-  uint8_t i2cLoud[4];
+  uint8_t i2cLoud[8];
 };
 //Yksi ulostulo
 ulostulo output;
@@ -118,10 +121,12 @@ uint8_t currentChannel = 0;
 bool boot = true;
 
 void setup() {
+  //analogReference(INTERNAL2V56);
+  
   Serial.begin(9600);
   i2c.begin();
   setupVariables();
-   
+  
   tft.reset();
   tft.initDisplay();
   

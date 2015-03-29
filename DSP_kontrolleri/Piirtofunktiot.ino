@@ -17,6 +17,36 @@ void setupVariables() {
     channel[i].balanssiKoordinaatti = 160;
     channel[i].bassoKoordinaatti = 160;
     channel[i].diskanttiKoordinaatti = 160;
+    switch (i){
+        case 0: 
+          channel[i].vasenOsoite =62;
+          channel[i].oikeaOsoite =63;
+          channel[i].muteOsoite =33;
+          channel[i].kompressoriOsoite =48;
+          channel[i].toneOsoite =32;
+          break; 
+        case 1:
+          channel[i].vasenOsoite =69;
+          channel[i].oikeaOsoite =70;
+          channel[i].muteOsoite =34;
+          channel[i].kompressoriOsoite =42;
+          channel[i].toneOsoite =75;
+        break;
+        case 2:
+          channel[i].vasenOsoite =71;
+          channel[i].oikeaOsoite =72;
+          channel[i].muteOsoite =35;
+          channel[i].kompressoriOsoite =54;
+          channel[i].toneOsoite =76;
+        break;
+        case 3:
+          channel[i].vasenOsoite =73;
+          channel[i].oikeaOsoite =74;
+          channel[i].muteOsoite =36;
+          channel[i].kompressoriOsoite =60;
+          channel[i].toneOsoite =77; 
+        break;
+    }
     for (int y=0; y<4; y++) {
       channel[i].i2cTone[y] = 0;
       channel[i].i2cVasen[y] = 0; 
@@ -30,6 +60,8 @@ void setupVariables() {
   }
   output.loudness = false;
   output.volumeKoordinaatti = 35;
+  output.volumeOsoite = 31;
+  output.loudnessOsoite = 64;
   for (int y=0; y<4; y++){
     output.i2cVolume[y] = 0;
     output.i2cLoud[y] = 0;
@@ -145,6 +177,7 @@ void piirraKanavat() {
 }
 void piirraLaatikot() {
     piirraMute(currentChannel);
+    piirraDefault();
     piirraKompressori(currentChannel);
 }
 
@@ -384,8 +417,7 @@ void piirraKompressori(uint8_t kanava){
    tft.fillRect(15, 210, 20,  1, WHITE);
    tft.fillRect(15, 215, 20,  1, WHITE);
    tft.fillRect(15, 220, 20,  1, WHITE);
-   
-   
+ 
 }
   
 void piirraLoudness(){
@@ -407,26 +439,25 @@ void piirraLoudness(){
    tft.fillRect(300, 210, 10, 3, WHITE);
    tft.drawString(268, 225, "Loudness", ORANGE, 1);
 }
-  
-  
+
 void piirraDefault(){
   //Täytetään laatikko sinisellä
-  tft.fillRect(0, 120, 60, 60, BLUE);
+  tft.fillRect(0, 122, 58, 56, BLUE);
   //Ympyrän piirto
-  tft.fillCircle(60, 150, 15, WHITE);
-  tft.drawString(20, 140, "D", ORANGE, 3); 
+  tft.fillCircle(30, 150, 15, WHITE);
+  tft.drawString(25, 140, "D", BLACK, 3);
 }
 void poistaDefault(){
   //Peittää alkuperäisen ympyrän
- tft.fillCircle(60, 150, 15, BLUE); 
- //Piirtää D kirjaimen
- tft.drawString(20, 140, "D", WHITE, 3);
- //Piirtää muutaman pixelin paksuiset ympyrän kehät
- tft.drawCircle(60, 150, 25, WHITE);
- tft.drawCircle(60, 150, 26, WHITE);
- tft.drawCircle(60, 150, 24, WHITE);
+  tft.fillCircle(30, 150, 15, BLUE);
+  //Piirtää D kirjaimen
+  tft.drawString(25, 140, "D", WHITE, 3);
+  //Piirtää muutaman pixelin paksuiset ympyrän kehät
+  tft.drawCircle(30, 150, 18, WHITE);
+  tft.drawCircle(30, 150, 19, WHITE);
+  tft.drawCircle(30, 150, 20, WHITE);
+  tft.drawCircle(30, 150, 24, WHITE);
+  tft.drawCircle(30, 150, 25, WHITE);
+  tft.drawCircle(30, 150, 26, WHITE);
+}  
  
- tft.drawCircle(60, 150, 15, WHITE);
- tft.drawCircle(60, 150, 16, WHITE);
- tft.drawCircle(60, 150, 17, WHITE); 
-}
