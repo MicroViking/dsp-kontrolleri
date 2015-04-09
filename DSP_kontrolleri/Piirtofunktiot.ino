@@ -331,7 +331,7 @@ void poistaVedin(uint8_t kanava, uint8_t vedin){
   tft.fillRect(xy[0]-11, xy[1]+10, 22, 12,  BLUE);
   }
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 void tarkastaPiirto(uint8_t c) {
   //Tarkastetaan onko c:n asetukset samat kuin nykyisen asetukset, jos ei niin päivitetään muuttuvaan kanavaan kuvakkeet ja sliderisijainnit
   if (channel[currentChannel].mute != channel[c].mute) piirraMute(c);
@@ -349,7 +349,6 @@ void tarkastaPiirto(uint8_t c) {
     piirraVedin(c, 3);
   }
 }
-
 
 void piirraMute(uint8_t kanava) {
 

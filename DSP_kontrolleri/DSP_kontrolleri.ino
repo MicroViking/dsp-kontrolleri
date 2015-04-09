@@ -180,6 +180,6 @@ void loop() {
         break;
   }
   
-  //palautaPinnit();
+  palautaPinnit();
   //delay(10);
 }
