@@ -444,13 +444,13 @@ void piirraDefault(){
   tft.fillRect(0, 122, 58, 56, BLUE);
   //Ympyrän piirto
   tft.fillCircle(30, 150, 15, WHITE);
-  tft.drawString(25, 140, "D", BLACK, 3);
+  tft.drawString(24, 140, "D", BLACK, 3);
 }
 void poistaDefault(){
   //Peittää alkuperäisen ympyrän
   tft.fillCircle(30, 150, 15, BLUE);
   //Piirtää D kirjaimen
-  tft.drawString(25, 140, "D", WHITE, 3);
+  tft.drawString(24, 140, "D", WHITE, 3);
   //Piirtää muutaman pixelin paksuiset ympyrän kehät
   tft.drawCircle(30, 150, 18, WHITE);
   tft.drawCircle(30, 150, 19, WHITE);

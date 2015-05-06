@@ -47,14 +47,17 @@ uint8_t muunnaKoordinaatti(uint16_t k) {
 }
 
 void DSPkomento (uint8_t registeri, uint8_t tavut[], uint8_t lkm) {
-    
+   digitalWrite(A7, HIGH);  
    uint8_t osoite = 0x68; //DSP piirin osoite kirjoitusbitillä
    i2c.beginTransmission(osoite); // Kutsutaan DSP:tä ottamaan dataa vastaa ja ensimäinen bitti on kirjoitus
    i2c.write(registeri); // Kerrotaan DSP:lle mihen registeriin kirjoitetaan
+   
       
-   i2c.write(tavut, lkm); // Kirjoitetaan tavut  
+   i2c.write(tavut, lkm); // Kirjoitetaan tavut 
+   
       
    i2c.endTransmission();    // stop transmitting
+   digitalWrite(A7, LOW);
     
       
 }

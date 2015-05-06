@@ -22,8 +22,8 @@
 //Duemilanove/Diecimila/UNO/etc ('168 and '328 chips) microcontoller:
 #define YP A1  // must be an analog pin, use "An" notation!
 #define XM A2  // must be an analog pin, use "An" notation!
-#define YM 7   // can be a digital pin
-#define XP 6   // can be a digital pin
+#define YM 30   // can be a digital pin
+#define XP 31   // can be a digital pin
 
 #define TS_MINX 120
 #define TS_MINY 80
@@ -126,6 +126,7 @@ void setup() {
   Serial.begin(9600);
   i2c.begin();
   setupVariables();
+  tft.outputPort('C');
   
   tft.reset();
   tft.initDisplay();
@@ -135,6 +136,7 @@ void setup() {
   //Tulostetaaan aloitusruutu
   teeLayout();
   pinMode(10, OUTPUT);
+  pinMode(A7, OUTPUT);
   boot = false;
 }
 
