@@ -1,10 +1,10 @@
- /* 320*240 pikseliä
-  laatikon mitat = 64 * 60 pikseliä
-  pystylaatikoiden mitat = 60 * 60 pikseliä
-  volansäätimen mitat = 64 * 240 pikseliä 
-  sliderien maksimi mitata 240 * 60 pikseliä 
+ /* 320*240 pikseliÃ¤
+  laatikon mitat = 64 * 60 pikseliÃ¤
+  pystylaatikoiden mitat = 60 * 60 pikseliÃ¤
+  volansÃ¤Ã¤timen mitat = 64 * 240 pikseliÃ¤ 
+  sliderien maksimi mitata 240 * 60 pikseliÃ¤ 
   
-  Nolla y = ylä reuna
+  Nolla y = ylÃ¤ reuna
   Maksimi 240 y = ala reuna
   Nolla x = vasen reuna
   Maksimi 320 x = oikea reuna
@@ -99,7 +99,7 @@ void teeLayout(){
    
    /*
    tft.fillRect(58, 60, 3, 120, ORANGE);
-   //Ohuet viivat ylhäällä
+   //Ohuet viivat ylhÃ¤Ã¤llÃ¤
    tft.fillRect(64, 0, 2, 57, RED);
    tft.fillRect(129, 0, 2, 57, RED);
    tft.fillRect(194, 0, 2, 57, RED);
@@ -107,18 +107,18 @@ void teeLayout(){
    tft.fillRect(0, 120, 60, 2, CYAN);
    tft.fillRect(0, 180, 60, 1, CYAN);
    tft.fillRect(260, 180, 60, 1, CYAN);
-   //Pystyssä olevat viivat
+   //PystyssÃ¤ olevat viivat
    tft.fillRect(59, 58, 1, 181, CYAN);
-   //Slideri laatikon täyttö
+   //Slideri laatikon tÃ¤yttÃ¶
    //tft.fillRect(60, 59, 200, 181, ORANGE);
    //Volume sliderin laatikko
    //tft.fillRect(263, 0, 57, 180, ORANGE);
    */
   
-   //Piirretään vetimien vetoalueet
+   //PiirretÃ¤Ã¤n vetimien vetoalueet
    piirraSliderit();
    
-   //Piirretäänn vedettävät vetimet
+   //PiirretÃ¤Ã¤nn vedettÃ¤vÃ¤t vetimet
    piirraVedin(currentChannel, 0);
    piirraVedin(currentChannel, 1);
    piirraVedin(currentChannel, 2);
@@ -242,7 +242,7 @@ void piirraVedin(uint8_t kanava, uint8_t vedin){
     //volume slideri 
     int16_t u = i2cVoimakkuus();
     int16_t x = 0;
-    //Sliderin tekstin korjaus siten että minus merkkiset on hieamn vasempana kuin muuten
+    //Sliderin tekstin korjaus siten ettÃ¤ minus merkkiset on hieamn vasempana kuin muuten
     if (u < -99) {
       x = xy[0]-12;  
     }
@@ -286,7 +286,7 @@ void piirraVedin(uint8_t kanava, uint8_t vedin){
     Serial.print("i2C luku: ");
     Serial.println(u);    
     int16_t x = 0;
-    //Sliderin tekstin korjaus siten että minus merkkiset on hieamn vasempana kuin muuten
+    //Sliderin tekstin korjaus siten ettÃ¤ minus merkkiset on hieamn vasempana kuin muuten
     if (u < -9) {
       x = xy[0]-9;
     }
@@ -333,7 +333,7 @@ void poistaVedin(uint8_t kanava, uint8_t vedin){
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 void tarkastaPiirto(uint8_t c) {
-  //Tarkastetaan onko c:n asetukset samat kuin nykyisen asetukset, jos ei niin päivitetään muuttuvaan kanavaan kuvakkeet ja sliderisijainnit
+  //Tarkastetaan onko c:n asetukset samat kuin nykyisen asetukset, jos ei niin pÃ¤ivitetÃ¤Ã¤n muuttuvaan kanavaan kuvakkeet ja sliderisijainnit
   if (channel[currentChannel].mute != channel[c].mute) piirraMute(c);
   if (channel[currentChannel].kompressori != channel[c].kompressori) piirraKompressori(c); 
   if (channel[currentChannel].balanssiKoordinaatti != channel[c].balanssiKoordinaatti) {
@@ -352,13 +352,13 @@ void tarkastaPiirto(uint8_t c) {
 
 void piirraMute(uint8_t kanava) {
 
-   //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
+   //TÃ¤ytetÃ¤Ã¤n kehyksen sisÃ¤osa halutulla vÃ¤rillÃ¤ ja otetaan huomioon kanavakohtaiset asetukset
    if (channel[kanava].mute == false) tft.fillRect(0,  61, 58, 60, GREEN);
    else tft.fillRect(0,  61, 58, 60, RED);
-   //Piirretään kajarikuvake ja otetaan huomioon kanavakohtainen asetus
-   //Piirretään magneetti
+   //PiirretÃ¤Ã¤n kajarikuvake ja otetaan huomioon kanavakohtainen asetus
+   //PiirretÃ¤Ã¤n magneetti
     tft.fillRect(13,  81, 3, 17, WHITE);
-    //Piirretään kajari
+    //PiirretÃ¤Ã¤n kajari
     int x =17;
     int y = 81;
     int h = 17;
@@ -384,7 +384,7 @@ void piirraMute(uint8_t kanava) {
      
    }
    else {
-    //Häivytetään kajarin kaikuviivat taustaan
+    //HÃ¤ivytetÃ¤Ã¤n kajarin kaikuviivat taustaan
      tft.fillRect(33, 88, 1, 4, RED);
      tft.fillRect(36, 80, 1, 4, RED);
      tft.fillRect(36, 96, 1, 4, RED);
@@ -397,7 +397,7 @@ void piirraMute(uint8_t kanava) {
 
 void piirraKompressori(uint8_t kanava){
     
-   //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
+   //TÃ¤ytetÃ¤Ã¤n kehyksen sisÃ¤osa halutulla vÃ¤rillÃ¤ ja otetaan huomioon kanavakohtaiset asetukset
    if (channel[kanava].kompressori == false) {
      tft.fillRect(0,  181, 59, 59, RED);
    }
@@ -421,13 +421,13 @@ void piirraKompressori(uint8_t kanava){
   
 void piirraLoudness(){
     
-   //Täytetään kehyksen sisäosa halutulla värillä ja otetaan huomioon kanavakohtaiset asetukset
+   //TÃ¤ytetÃ¤Ã¤n kehyksen sisÃ¤osa halutulla vÃ¤rillÃ¤ ja otetaan huomioon kanavakohtaiset asetukset
    if (output.loudness == false) {
-     Serial.println("Piirretään punainen Loudness");
+     Serial.println("PiirretÃ¤Ã¤n punainen Loudness");
      tft.fillRect(263,  181, 57, 59, RED);
    }
    else {
-     Serial.println("Piirretään vihreä Loudness");
+     Serial.println("PiirretÃ¤Ã¤n vihreÃ¤ Loudness");
      tft.fillRect(263,  181, 57, 59, GREEN);
      
    }
@@ -440,18 +440,18 @@ void piirraLoudness(){
 }
 
 void piirraDefault(){
-  //Täytetään laatikko sinisellä
+  //TÃ¤ytetÃ¤Ã¤n laatikko sinisellÃ¤
   tft.fillRect(0, 122, 58, 56, BLUE);
-  //Ympyrän piirto
+  //YmpyrÃ¤n piirto
   tft.fillCircle(30, 150, 15, WHITE);
   tft.drawString(24, 140, "D", BLACK, 3);
 }
 void poistaDefault(){
-  //Peittää alkuperäisen ympyrän
+  //PeittÃ¤Ã¤ alkuperÃ¤isen ympyrÃ¤n
   tft.fillCircle(30, 150, 15, BLUE);
-  //Piirtää D kirjaimen
+  //PiirtÃ¤Ã¤ D kirjaimen
   tft.drawString(24, 140, "D", WHITE, 3);
-  //Piirtää muutaman pixelin paksuiset ympyrän kehät
+  //PiirtÃ¤Ã¤ muutaman pixelin paksuiset ympyrÃ¤n kehÃ¤t
   tft.drawCircle(30, 150, 18, WHITE);
   tft.drawCircle(30, 150, 19, WHITE);
   tft.drawCircle(30, 150, 20, WHITE);
@@ -460,3 +460,4 @@ void poistaDefault(){
   tft.drawCircle(30, 150, 26, WHITE);
 }  
  
+

@@ -1,4 +1,3 @@
-#include <inttypes.h>
 #include <TFTLCD.h>
 #include <TouchScreen.h>
 #include <Wire.h>
@@ -76,32 +75,32 @@ TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 // i2c Objekti
 TwoWire i2c;
 
-//Sisääntuloasetukset
+//Sisaanntuloasetukset
 struct audioKanava {
-    // Kanava kohtaiset boolean muuttujat
-    bool mute;
-    bool kompressori;
-    
-    // kanavakohtaisten slidereiden koordinaatit
-    uint8_t bassoKoordinaatti; 
-    uint8_t diskanttiKoordinaatti;
-    uint8_t balanssiKoordinaatti;
-    
-    //i2c registeriosoitteet
-    uint8_t muteOsoite;
-    uint8_t kompressoriOsoite;
-    uint8_t toneOsoite;
-    uint8_t vasenOsoite;
-    uint8_t oikeaOsoite;
-    
-    //i2c tulostus taulukot
-    uint8_t i2cTone[4];
-    uint8_t i2cVasen[4];
-    uint8_t i2cOikea[4];
-    uint8_t i2cMute[4];
-    uint8_t i2cKomp[8];
+  // Kanava kohtaiset boolean muuttujat
+  bool mute;
+  bool kompressori;
+
+  // kanavakohtaisten slidereiden koordinaatit
+  uint8_t bassoKoordinaatti; 
+  uint8_t diskanttiKoordinaatti;
+  uint8_t balanssiKoordinaatti;
+
+  //i2c registeriosoitteet
+  uint8_t muteOsoite;
+  uint8_t kompressoriOsoite;
+  uint8_t toneOsoite;
+  uint8_t vasenOsoite;
+  uint8_t oikeaOsoite;
+
+  //i2c tulostus taulukot
+  uint8_t i2cTone[4];
+  uint8_t i2cVasen[4];
+  uint8_t i2cOikea[4];
+  uint8_t i2cMute[4];
+  uint8_t i2cKomp[8];
 };
-//Neljä sisääntuloa
+//Neljä¤ sisääntuloa
 struct audioKanava channel[4];
 
 //Ulostuloasetukset
@@ -116,21 +115,21 @@ struct ulostulo {
 };
 //Yksi ulostulo
 ulostulo output;
-//Mikä kanava on auki milloinkin
+//MikÃ¤ kanava on auki milloinkin
 uint8_t currentChannel = 0;
 bool boot = true;
 
 void setup() {
   //analogReference(INTERNAL2V56);
-  
+
   Serial.begin(9600);
   i2c.begin();
   setupVariables();
   tft.outputPort('C');
-  
+
   tft.reset();
   tft.initDisplay();
-  
+
   tft.setRotation(1);
   tft.fillScreen(BLUE); 
   //Tulostetaaan aloitusruutu
@@ -144,44 +143,46 @@ void loop() {
   ///Luetaan kosketuspiste
   int kosketus = tarkistatouch();
   switch (kosketus) {
-    case 0:
-        //Kaikki kanavan sisäiset funktiot palauttava nollan
-        //delay(10);
-        break;
-    case 1:
-        Serial.println("Piirretaan kanava 1");
-        piirraKanava(0);
-        //Koska tahdotaan nopeuttaa kanavan vaihdossa piirtoaikaa tarkastetaan ovatko eri kanavien asetusarvot samat
-        //ja tarvittaessa päivitetään kanavan laatikot ja sliderit
-        tarkastaPiirto(0);
-        //Päivitetään nykyinen kanava muuttuja
-        currentChannel = 0;
-        //delay(10);
-        break;
-    case 2:
-        Serial.println("Piirretaan kanava 2");
-        piirraKanava(1);
-        tarkastaPiirto(1);
-        currentChannel = 1;
-        //delay(10);
-        break; 
-    case 3:
-        Serial.println("Piirretaan kanava 3");
-        piirraKanava(2);
-        tarkastaPiirto(2);
-        currentChannel = 2;
-        //delay(10);
-        break;
-    case 4:
-        Serial.println("Suoritetaan tapaus 4.");
-        Serial.println("Piirretaan kanava 4");
-        piirraKanava(3);
-        tarkastaPiirto(3);
-        currentChannel = 3;
-        //delay(10);
-        break;
+  case 0:
+    //Kaikki kanavan sisÃ¤iset funktiot palauttava nollan
+    //delay(10);
+    break;
+  case 1:
+    Serial.println("Piirretaan kanava 1");
+    piirraKanava(0);
+    //Koska tahdotaan nopeuttaa kanavan vaihdossa piirtoaikaa tarkastetaan ovatko eri kanavien asetusarvot samat
+    //ja tarvittaessa pÃ¤ivitetÃ¤Ã¤n kanavan laatikot ja sliderit
+    tarkastaPiirto(0);
+    //PÃ¤ivitetÃ¤Ã¤n nykyinen kanava muuttuja
+    currentChannel = 0;
+    //delay(10);
+    break;
+  case 2:
+    Serial.println("Piirretaan kanava 2");
+    piirraKanava(1);
+    tarkastaPiirto(1);
+    currentChannel = 1;
+    //delay(10);
+    break; 
+  case 3:
+    Serial.println("Piirretaan kanava 3");
+    piirraKanava(2);
+    tarkastaPiirto(2);
+    currentChannel = 2;
+    //delay(10);
+    break;
+  case 4:
+    Serial.println("Suoritetaan tapaus 4.");
+    Serial.println("Piirretaan kanava 4");
+    piirraKanava(3);
+    tarkastaPiirto(3);
+    currentChannel = 3;
+    //delay(10);
+    break;
   }
-  
+
   palautaPinnit();
   //delay(10);
 }
+
+

@@ -1,10 +1,10 @@
 
 /*
-  int määrittää palautusarvon tyypin. int16_t, int32_t, int8_t = -23313->235421, unsigned int = 0->3414134234, char, unsigned char, void = ei palauta mitään
+  int mÃ¤Ã¤rittÃ¤Ã¤ palautusarvon tyypin. int16_t, int32_t, int8_t = -23313->235421, unsigned int = 0->3414134234, char, unsigned char, void = ei palauta mitÃ¤Ã¤n
   
-  otaYhteys = funktion nimi ja aina ensimäinen kirjain pienellä ja lisäsanat isolla
+  otaYhteys = funktion nimi ja aina ensimÃ¤inen kirjain pienellÃ¤ ja lisÃ¤sanat isolla
   
-  byte a jne määrittää funktiolla syötettävien parametrien tyypit.
+  byte a jne mÃ¤Ã¤rittÃ¤Ã¤ funktiolla syÃ¶tettÃ¤vien parametrien tyypit.
   
   DSP SLAVE osoitteet
   
@@ -48,8 +48,8 @@ uint8_t muunnaKoordinaatti(uint16_t k) {
 
 void DSPkomento (uint8_t registeri, uint8_t tavut[], uint8_t lkm) {
    digitalWrite(A7, HIGH);  
-   uint8_t osoite = 0x68; //DSP piirin osoite kirjoitusbitillä
-   i2c.beginTransmission(osoite); // Kutsutaan DSP:tä ottamaan dataa vastaa ja ensimäinen bitti on kirjoitus
+   uint8_t osoite = 0x69; //DSP piirin osoite kirjoitusbitillÃ¤
+   i2c.beginTransmission(osoite); // Kutsutaan DSP:tÃ¤ ottamaan dataa vastaa ja ensimÃ¤inen bitti on kirjoitus
    i2c.write(registeri); // Kerrotaan DSP:lle mihen registeriin kirjoitetaan
    
       
@@ -62,7 +62,7 @@ void DSPkomento (uint8_t registeri, uint8_t tavut[], uint8_t lkm) {
       
 }
 /*TODO
-  Voimakkuus sliderien i2c rajapinnan tarvitsemia funktioita. Palautettavat arvot pitää olla tavun kokoisia
+  Voimakkuus sliderien i2c rajapinnan tarvitsemia funktioita. Palautettavat arvot pitÃ¤Ã¤ olla tavun kokoisia
 */
 //Palautetaan i2c luku koordinaateista
 int16_t i2cLuku(uint16_t k) {
@@ -73,7 +73,7 @@ int16_t i2cLuku(uint16_t k) {
   //else if (l >= 20) l = l-20;
   Serial.print("i2c Luki on:  ");
   Serial.println(l);
-  //Palautetaan negatiivisia lukuja tai positiivisä DSP:lle
+  //Palautetaan negatiivisia lukuja tai positiivisÃ¤ DSP:lle
   //channel[currentChannel].i2cTone[3] = x;
   return l;
 }
@@ -122,11 +122,12 @@ uint16_t i2cKoordinaatiksi(int16_t k) {
 int8_t i2cVoimakkuus() {
   //Mapataan volumen koordinaatit DSB voluumi lukuihin
   int8_t x = map(output.volumeKoordinaatti, 25, 145, 0, 130);
-  //DSB:ssä volumea voi kasvatta 10db
+  //DSB:ssÃ¤ volumea voi kasvatta 10db
   if (x < 11) x = 10-x;
-  //Koska volume on 0:sta -120db pitää 130 luvut pienentää 10:llä ja kertoa negatiiviseksi
+  //Koska volume on 0:sta -120db pitÃ¤Ã¤ 130 luvut pienentÃ¤Ã¤ 10:llÃ¤ ja kertoa negatiiviseksi
   else x = (x-10)*-1;
   //Serial.print("Voimakkuus: ");
   //Serial.println(x);
   return x;
 }
+
